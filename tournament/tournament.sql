@@ -4,14 +4,13 @@
 -- psql tounament
 
 CREATE TABLE players(id SERIAL PRIMARY KEY,
-                     name TEXT ,
+                     player_name TEXT ,
                      created_at TIMESTAMP default CURRENT_TIMESTAMP );
 
-CREATE TABLE matches(id SERIAL PRIMARY KEY,
-                     winner_id INT,
-                     loser_id INT,
-                     FOREIGN KEY (winner_id) REFERENCES players(id),
-                     FOREIGN KEY (loser_id) REFERENCES players(id));
+CREATE TABLE matches(match_id SERIAL PRIMARY KEY,
+                     player1 INTEGER REFERENCES players(id),
+                     player2 INTEGER REFERENCES players(id),
+                     winner INTEGER REFERENCES players(id) );
 
 
 
