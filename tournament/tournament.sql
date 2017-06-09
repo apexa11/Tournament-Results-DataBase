@@ -5,14 +5,28 @@
 
 CREATE TABLE players(id SERIAL PRIMARY KEY,
                      player_name TEXT ,
-                     created_at TIMESTAMP default CURRENT_TIMESTAMP );
+                    );
 
 CREATE TABLE matches(match_id SERIAL PRIMARY KEY,
-                     player1 INTEGER REFERENCES players(id),
-                     player2 INTEGER REFERENCES players(id),
-                     winner INTEGER REFERENCES players(id) );
+                     win_id INTEGER REFERENCES players(id),
+                     lose_id INTEGER REFERENCES players(id));
 
+CREATE VIEW players_lose as
+select players.id as ID, COALESCE(count(lose_id),0) as LOSE
+from players left join matches on players.id = matches.lose_id
+group by players.id
+order by LOSE desc;
 
+CREATE VIEW players_wins as
+select players.id as ID, COALESCE(count(win_id),0) as WIN
+from players left join matches on players.id = matches.win_id
+group by players.id
+order by WIN desc;
 
+CREATE VIEW standing as
+select players_wins.ID as ID , name,player_wins.WIN as WINS ,players_lose.LOSE + players_wins.WIN as matche
+from players,players_lose,players_wins
+where players.id = players_wins.ID and players_lose.ID = players_wins.ID
+order by WINS desc;
 
 
