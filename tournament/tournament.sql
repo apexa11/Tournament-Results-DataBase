@@ -23,7 +23,7 @@ from players left join matches on players.id = matches.win_id
 group by players.id
 order by WIN desc;
 
-CREATE VIEW standing as
+CREATE VIEW standings as
 select players_wins.ID as ID , name,player_wins.WIN as WINS ,players_lose.LOSE + players_wins.WIN as matche
 from players,players_lose,players_wins
 where players.id = players_wins.ID and players_lose.ID = players_wins.ID

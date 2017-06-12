@@ -10,11 +10,11 @@ from tournament import *
 
 def testDeleteMatches():
     deleteMatches()
-    print : "delete all matches records"
+    print :"1.delete all matches records"
 
 def testDeletePlayers():
     deletePlayers()
-    print : "delete all players record"
+    print : "2.delete all players record"
 
 
 def testCount():
@@ -43,19 +43,19 @@ def testRegister():
     if c != 1:
         raise ValueError(
             "After one player registers, countPlayers() should be 1.")
-            print "2. countPlayers() returns 1 after one player is registered."
+            print "3. countPlayers() returns 1 after one player is registered."
     registerPlayer("Jay Beleren")
     c = countPlayers()
     if c != 2:
         raise ValueError(
             "After two players register, countPlayers() should be 2. Got {c}".format(c=c))
-    print "3. countPlayers() returns 2 after two players are registered."
+    print "4. countPlayers() returns 2 after two players are registered."
     deletePlayers()
     c = countPlayers()
     if c != 0:
         raise ValueError(
             "After deletion, countPlayers should return zero.")
-    print "4. countPlayers() returns zero after registered players are deleted.\n5. Player records successfully deleted."
+    print "5. countPlayers() returns zero after registered players are deleted.\n5. Player records successfully deleted."
 
 def testStandingsBeforeMatches():
     """
@@ -163,6 +163,9 @@ def testPairings():
 
 
 if __name__ == '__main__':
+    testDeleteMatches()
+    testDeletePlayers()
+    testRegister()
     testCount()
     testStandingsBeforeMatches()
     testReportMatches()
