@@ -71,6 +71,13 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
+    DB = connect()
+    c = DB.cursor()
+    c.execute("select * from standings")
+    standings = c.fetchall()
+    c.close()
+    DB.close()
+    return standings
 
 
 def reportMatch(winner, loser):
@@ -82,8 +89,7 @@ def reportMatch(winner, loser):
     """
     DB = connect()
     c = c.cursor()
-    c.execute(""" INSERT INTO matches (player1,player2,winner)
-                  VALUSE (%s,%s,%s)""" (winner,loser,winner))
+    c.execute(" INSERT INTO matches VALUSE (%s,%s)" (winner,loser))
     DB.commit()
     c.close()
     DB.close()
@@ -104,5 +110,8 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
+    standings = playerStandings()
+
+
 
 

@@ -8,6 +8,15 @@
 
 from tournament import *
 
+def testDeleteMatches():
+    deleteMatches()
+    print : "delete all matches records"
+
+def testDeletePlayers():
+    deletePlayers()
+    print : "delete all players record"
+
+
 def testCount():
     """
     Test for initial player count,
@@ -22,13 +31,23 @@ def testCount():
             "countPlayers should return numeric zero, not string '0'.")
     if c != 0:
         raise ValueError("After deletion, countPlayers should return zero.")
-    print "1. countPlayers() returns 0 after initial deletePlayers() execution."
+            "after deleting, countPlayers() return zero."
+
+
+
+def testRegister():
+    deleteMatches()
+    deletePlayers()
     registerPlayer("Chandra Nalaar")
     c = countPlayers()
     if c != 1:
         raise ValueError(
-            "After one player registers, countPlayers() should be 1. Got {c}".format(c=c))
-    print "2. countPlayers() returns 1 after one player is registered."
+            "After one player registers, countPlayers() should be 1.")
+            print "2. countPlayers() returns 1 after one player is registered."
+
+
+
+
     registerPlayer("Jace Beleren")
     c = countPlayers()
     if c != 2:
