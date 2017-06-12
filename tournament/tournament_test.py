@@ -38,17 +38,13 @@ def testCount():
 def testRegister():
     deleteMatches()
     deletePlayers()
-    registerPlayer("Chandra Nalaar")
+    registerPlayer("kaushal Nalaar")
     c = countPlayers()
     if c != 1:
         raise ValueError(
             "After one player registers, countPlayers() should be 1.")
             print "2. countPlayers() returns 1 after one player is registered."
-
-
-
-
-    registerPlayer("Jace Beleren")
+    registerPlayer("Jay Beleren")
     c = countPlayers()
     if c != 2:
         raise ValueError(
@@ -68,8 +64,8 @@ def testStandingsBeforeMatches():
     """
     deleteMatches()
     deletePlayers()
-    registerPlayer("Melpomene Murray")
-    registerPlayer("Randy Schwartz")
+    registerPlayer("Meghna Murray")
+    registerPlayer("Ronak Schwartz")
     standings = playerStandings()
     if len(standings) < 2:
         raise ValueError("Players should appear in playerStandings even before "
@@ -94,10 +90,10 @@ def testReportMatches():
     """
     deleteMatches()
     deletePlayers()
-    registerPlayer("Bruno Walton")
-    registerPlayer("Boots O'Neal")
-    registerPlayer("Cathy Burton")
-    registerPlayer("Diane Grant")
+    registerPlayer("Batman Walton")
+    registerPlayer("Biter O'Neal")
+    registerPlayer("Chintu Burton")
+    registerPlayer("Diyna Grant")
     standings = playerStandings()
     [id1, id2, id3, id4] = [row[0] for row in standings]
     reportMatch(id1, id2)
