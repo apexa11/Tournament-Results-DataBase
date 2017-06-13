@@ -10,62 +10,59 @@ from tournament import *
 
 def testDeleteMatches():
     deleteMatches()
-    print :"1.delete all matches records"
+    print "1.delete all matches records"
 
 def testDeletePlayers():
     deletePlayers()
-    print : "2.delete all players record"
-
+    print  "2.delete all players record"
 
 def testCount():
-    """
-    Test for initial player count,
-             player count after 1 and 2 players registered,
-             player count after players deleted.
-    """
     deleteMatches()
     deletePlayers()
     c = countPlayers()
     if c == '0':
         raise TypeError(
-            "countPlayers should return numeric zero, not string '0'.")
-    if c != 0:
-        raise ValueError("After deletion, countPlayers should return zero.")
-            "after deleting, countPlayers() return zero."
-
+            "countPlayers() should return numeric zero, not string '0'.")
+    if c != 0 :
+        raise ValueError(
+            "After deleting, countPlayers should return zero.")
+    print "3. After deleting, countPlayers() returns zero."
 
 
 def testRegister():
     deleteMatches()
     deletePlayers()
-    registerPlayer("kaushal Nalaar")
+    registerPlayer("Chandra Nalaar")
     c = countPlayers()
     if c != 1:
         raise ValueError(
             "After one player registers, countPlayers() should be 1.")
-            print "3. countPlayers() returns 1 after one player is registered."
-    registerPlayer("Jay Beleren")
+    print "4. After registering a player, countPlayers() returns 1."
+
+
+def testRegisterCountDelete():
+    deleteMatches()
+    deletePlayers()
+    registerPlayer("Markov Chaney")
+    registerPlayer("Joe Malik")
+    registerPlayer("Mao Tsu-hsi")
+    registerPlayer("Atlanta Hope")
     c = countPlayers()
-    if c != 2:
+    if c != 4:
         raise ValueError(
-            "After two players register, countPlayers() should be 2. Got {c}".format(c=c))
-    print "4. countPlayers() returns 2 after two players are registered."
+            "After registering four players, countPlayers should be 4.")
     deletePlayers()
     c = countPlayers()
     if c != 0:
-        raise ValueError(
-            "After deletion, countPlayers should return zero.")
-    print "5. countPlayers() returns zero after registered players are deleted.\n5. Player records successfully deleted."
+        raise ValueError("After deleting, countPlayers should return zero.")
+    print "5. Players can be registered and deleted."
+
 
 def testStandingsBeforeMatches():
-    """
-    Test to ensure players are properly represented in standings prior
-    to any matches being reported.
-    """
     deleteMatches()
     deletePlayers()
-    registerPlayer("Meghna Murray")
-    registerPlayer("Ronak Schwartz")
+    registerPlayer("Melpomene Murray")
+    registerPlayer("Randy Schwartz")
     standings = playerStandings()
     if len(standings) < 2:
         raise ValueError("Players should appear in playerStandings even before "
@@ -165,8 +162,9 @@ def testPairings():
 if __name__ == '__main__':
     testDeleteMatches()
     testDeletePlayers()
-    testRegister()
     testCount()
+    testRegister()
+    testRegisterCountDelete()
     testStandingsBeforeMatches()
     testReportMatches()
     testPairings()

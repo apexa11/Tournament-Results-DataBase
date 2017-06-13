@@ -34,11 +34,10 @@ def countPlayers():
     """Returns the number of players currently registered."""
     DB = connect()
     c = DB.cursor()
-    c.execute("SELECT COUNT(id) from players")
-    players_count = c.fetchall()
-    c.close()
+    c.execute("SELECT COUNT(*) from players")
+    players_count = c.fetchone()
     DB.close()
-    return players_count
+    return players_count[0]
 
 
 def registerPlayer(name):
@@ -52,7 +51,7 @@ def registerPlayer(name):
     """
     DB = connect()
     c = DB.cursor()
-    c.execute("INSERT INTO players (player_name) VALUSE (%s)", (name,))
+    c.execute("INSERT INTO players (player_name)values(%s);", (name,))
     c.close()
     DB.commit()
     DB.close()
@@ -112,8 +111,4 @@ def swissPairings():
     """
     standings = playerStandings()
     return [(standings [i-1][0] , standings [i-1][1],standings [i][0],standings[i][1])
-            for i in range(1, len(standings),2]
-
-
-
-
+            for i in range(1, len(standings),2)]

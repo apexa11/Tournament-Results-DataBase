@@ -4,12 +4,12 @@
 -- psql tounament
 
 CREATE TABLE players(id SERIAL PRIMARY KEY,
-                     player_name TEXT ,
+                     player_name TEXT
                     );
 
 CREATE TABLE matches(match_id SERIAL PRIMARY KEY,
-                     win_id INTEGER REFERENCES players(id),
-                     lose_id INTEGER REFERENCES players(id));
+                     win_id SERIAL REFERENCES players(id),
+                     lose_id SERIAL REFERENCES players(id));
 
 CREATE VIEW players_lose as
 select players.id as ID, COALESCE(count(lose_id),0) as LOSE
@@ -24,7 +24,7 @@ group by players.id
 order by WIN desc;
 
 CREATE VIEW standings as
-select players_wins.ID as ID , name,player_wins.WIN as WINS ,players_lose.LOSE + players_wins.WIN as matche
+select players_wins.ID as ID ,player_name,players_wins.WIN as WINS ,players_lose.LOSE + players_wins.WIN as matche
 from players,players_lose,players_wins
 where players.id = players_wins.ID and players_lose.ID = players_wins.ID
 order by WINS desc;
