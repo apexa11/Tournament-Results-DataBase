@@ -34,7 +34,7 @@ def countPlayers():
     """Returns the number of players currently registered."""
     DB = connect()
     c = DB.cursor()
-    c.execute("SELECT COUNT(*) from players")
+    c.execute("SELECT COUNT(*) FROM players;")
     players_count = c.fetchone()
     DB.close()
     return players_count[0]
@@ -51,8 +51,7 @@ def registerPlayer(name):
     """
     DB = connect()
     c = DB.cursor()
-    c.execute("INSERT INTO players (player_name)values(%s);", (name,))
-    c.close()
+    c.execute("INSERT INTO players (player_name) VALUES (%s)", (name,))
     DB.commit()
     DB.close()
 

@@ -9,7 +9,8 @@ CREATE TABLE players(id SERIAL PRIMARY KEY,
 
 CREATE TABLE matches(match_id SERIAL PRIMARY KEY,
                      win_id SERIAL REFERENCES players(id),
-                     lose_id SERIAL REFERENCES players(id));
+                     lose_id SERIAL REFERENCES players(id)
+                     );
 
 CREATE VIEW players_lose as
 select players.id as ID, COALESCE(count(lose_id),0) as LOSE

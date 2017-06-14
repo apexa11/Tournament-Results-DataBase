@@ -1,20 +1,19 @@
 #!/usr/bin/env python
 #
 # Test cases for tournament.py
-# These tests are not exhaustive, but they should cover the majority of cases.
-#
-# If you do add any of the extra credit options, be sure to add/modify these test cases
-# as appropriate to account for your module's added functionality.
 
 from tournament import *
 
 def testDeleteMatches():
     deleteMatches()
-    print "1.delete all matches records"
+    print "1. Old matches can be deleted."
 
-def testDeletePlayers():
+
+def testDelete():
+    deleteMatches()
     deletePlayers()
-    print  "2.delete all players record"
+    print "2. Player records can be deleted."
+
 
 def testCount():
     deleteMatches()
@@ -23,9 +22,8 @@ def testCount():
     if c == '0':
         raise TypeError(
             "countPlayers() should return numeric zero, not string '0'.")
-    if c != 0 :
-        raise ValueError(
-            "After deleting, countPlayers should return zero.")
+    if c != 0:
+        raise ValueError("After deleting, countPlayers should return zero.")
     print "3. After deleting, countPlayers() returns zero."
 
 
@@ -80,17 +78,14 @@ def testStandingsBeforeMatches():
                          "even if they have no matches played.")
     print "6. Newly registered players appear in the standings with no matches."
 
+
 def testReportMatches():
-    """
-    Test that matches are reported properly.
-    Test to confirm matches are deleted properly.
-    """
     deleteMatches()
     deletePlayers()
-    registerPlayer("Batman Walton")
-    registerPlayer("Biter O'Neal")
-    registerPlayer("Chintu Burton")
-    registerPlayer("Diyna Grant")
+    registerPlayer("Bruno Walton")
+    registerPlayer("Boots O'Neal")
+    registerPlayer("Cathy Burton")
+    registerPlayer("Diane Grant")
     standings = playerStandings()
     [id1, id2, id3, id4] = [row[0] for row in standings]
     reportMatch(id1, id2)
@@ -104,64 +99,35 @@ def testReportMatches():
         elif i in (id2, id4) and w != 0:
             raise ValueError("Each match loser should have zero wins recorded.")
     print "7. After a match, players have updated standings."
-    deleteMatches()
-    standings = playerStandings()
-    if len(standings) != 4:
-        raise ValueError("Match deletion should not change number of players in standings.")
-    for (i, n, w, m) in standings:
-        if m != 0:
-            raise ValueError("After deleting matches, players should have zero matches recorded.")
-        if w != 0:
-            raise ValueError("After deleting matches, players should have zero wins recorded.")
-    print "8. After match deletion, player standings are properly reset.\n9. Matches are properly deleted."
+
 
 def testPairings():
-    """
-    Test that pairings are generated properly both before and after match reporting.
-    """
     deleteMatches()
     deletePlayers()
     registerPlayer("Twilight Sparkle")
     registerPlayer("Fluttershy")
     registerPlayer("Applejack")
     registerPlayer("Pinkie Pie")
-    registerPlayer("Rarity")
-    registerPlayer("Rainbow Dash")
-    registerPlayer("Princess Celestia")
-    registerPlayer("Princess Luna")
     standings = playerStandings()
-    [id1, id2, id3, id4, id5, id6, id7, id8] = [row[0] for row in standings]
-    pairings = swissPairings()
-    if len(pairings) != 4:
-        raise ValueError(
-            "For eight players, swissPairings should return 4 pairs. Got {pairs}".format(pairs=len(pairings)))
+    [id1, id2, id3, id4] = [row[0] for row in standings]
     reportMatch(id1, id2)
     reportMatch(id3, id4)
-    reportMatch(id5, id6)
-    reportMatch(id7, id8)
     pairings = swissPairings()
-    if len(pairings) != 4:
+    if len(pairings) != 2:
         raise ValueError(
-            "For eight players, swissPairings should return 4 pairs. Got {pairs}".format(pairs=len(pairings)))
-    [(pid1, pname1, pid2, pname2), (pid3, pname3, pid4, pname4), (pid5, pname5, pid6, pname6), (pid7, pname7, pid8, pname8)] = pairings
-    possible_pairs = set([frozenset([id1, id3]), frozenset([id1, id5]),
-                          frozenset([id1, id7]), frozenset([id3, id5]),
-                          frozenset([id3, id7]), frozenset([id5, id7]),
-                          frozenset([id2, id4]), frozenset([id2, id6]),
-                          frozenset([id2, id8]), frozenset([id4, id6]),
-                          frozenset([id4, id8]), frozenset([id6, id8])
-                          ])
-    actual_pairs = set([frozenset([pid1, pid2]), frozenset([pid3, pid4]), frozenset([pid5, pid6]), frozenset([pid7, pid8])])
-    for pair in actual_pairs:
-        if pair not in possible_pairs:
-            raise ValueError(
-                "After one match, players with one win should be paired.")
-    print "10. After one match, players with one win are properly paired."
+            "For four players, swissPairings should return two pairs.")
+    [(pid1, pname1, pid2, pname2), (pid3, pname3, pid4, pname4)] = pairings
+    correct_pairs = set([frozenset([id1, id3]), frozenset([id2, id4])])
+    actual_pairs = set([frozenset([pid1, pid2]), frozenset([pid3, pid4])])
+    if correct_pairs != actual_pairs:
+        raise ValueError(
+            "After one match, players with one win should be paired.")
+    print "8. After one match, players with one win are paired."
 
 
 if __name__ == '__main__':
     testDeleteMatches()
-    testDeletePlayers()
+    testDelete()
     testCount()
     testRegister()
     testRegisterCountDelete()
