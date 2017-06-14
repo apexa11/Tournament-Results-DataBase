@@ -4,7 +4,7 @@
 -- psql tounament
 
 CREATE TABLE players(id SERIAL PRIMARY KEY,
-                     player_name TEXT
+                     Player_Name TEXT
                     );
 
 CREATE TABLE matches(match_id SERIAL PRIMARY KEY,
