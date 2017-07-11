@@ -17,6 +17,7 @@ def deleteMatches():
     DB = connect()
     c = DB.cursor()
     c.execute("DELETE from matches")
+    DB.commit()
     c.close()
     DB.close()
 
@@ -25,6 +26,7 @@ def deletePlayers():
     DB = connect()
     c = DB.cursor()
     c.execute("DELETE from players")
+    DB.commit()
     c.close()
     DB.close()
 
@@ -74,6 +76,7 @@ def playerStandings():
     c = DB.cursor()
     c.execute("select * from standings")
     standings = c.fetchall()
+    DB.commit()
     c.close()
     DB.close()
     return standings
@@ -87,8 +90,8 @@ def reportMatch(winner, loser):
       loser:  the id number of the player who lost
     """
     DB = connect()
-    c = c.cursor()
-    c.execute(" INSERT INTO matches VALUSE (%s,%s)" (winner,loser))
+    c = DB.cursor()
+    c.execute(" INSERT INTO matches (win_id,lose_id) Values (%s,%s)", (winner,loser))
     DB.commit()
     c.close()
     DB.close()
